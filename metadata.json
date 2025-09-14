@@ -1,0 +1,5 @@
+{
+  "name": "Objection Builder",
+  "description": "An AI-powered application to help users generate well-structured, respectful, and effective counterarguments for various personal and professional scenarios. Based on user-provided context, target audience, and desired tone, it produces multiple response options with risk analysis and supporting evidence.",
+  "requestFramePermissions": []
+}
