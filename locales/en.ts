@@ -68,7 +68,7 @@ export default {
     },
     gemini: {
         mainPrompt: `
-You are an expert in communication, negotiation, and psychology. Your task is to generate three distinct, well-reasoned objections or counterarguments based on the user's request.
+You are an expert in communication, negotiation, and psychology. Your task is to generate one, well-reasoned objections or counterarguments based on the user's request.
 
 TASK CONTEXT:
 {historyPrompt}
@@ -83,14 +83,14 @@ DESIRED RESPONSE STYLE:
 - Emotional Style: {emotionalStyle}
 - Tone Intensity (1=Gentle, 5=Forceful): {toneIntensity}
 
-For each of the three generated responses, you MUST provide the following in valid JSON format:
+For generated response, you MUST provide the following in valid JSON format:
 1.  **responseText**: The complete, ready-to-use text of the counterargument.
 2.  **riskLevel**: Assess the interpersonal risk ('Low', 'Medium', 'High') of using this response.
 3.  **riskReasoning**: Briefly explain the reasoning behind the assigned risk level.
 4.  **fallacies**: An array of potential logical fallacies in the *original* statement. If none, return an empty array.
 5.  **citations**: An array of verifiable citations if the response is evidence-based. If none, return an empty array.
 
-The final output MUST be a JSON array of three objects adhering to the specified schema. Do not include any explanatory text outside of the JSON structure.
+The final output MUST be a JSON array of one object adhering to the specified schema. Do not include any explanatory text outside of the JSON structure.
         `,
         history: {
             start: "This is the start of the conversation.",
