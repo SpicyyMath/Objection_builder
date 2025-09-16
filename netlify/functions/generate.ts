@@ -44,11 +44,10 @@ export const handler: Handler = async (event) => {
   }
 
   try {
-    const { formData, conversationHistory, language, translations } = JSON.parse(event.body || '{}');
+    const { formData, conversationHistory, geminiPrompt } = JSON.parse(event.body || '{}');//加入了geminiPrompt,删除了language和translations
     
     // 从前端接收翻译文本，这样我们就不需要在后端也维护一份
-    const t = translations.gemini;
-
+    const t = geminiPrompt;
     const historyPrompt = conversationHistory.length > 0
     ? t.history.continue
         .replace('{history}', conversationHistory.map((turn: ConversationTurn) => `${turn.role === 'You' ? t.history.you : t.history.them}: ${turn.text}`).join('\n\n'))
