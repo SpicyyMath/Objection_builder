@@ -26,7 +26,7 @@ export default {
         frameworkTooltip: "What communication model should be used as a guideline?",
         emotionLabel: "Emotional Style",
         emotionTooltip: "What is the core emotion behind the response?",
-        intensityLabel: "Tone Intensity:",
+        intensityLabel: "Tone Intensity (1=Gentle, 5=Forceful):",
         generateButton: "Generate Objections",
         generatingButton: "Generating...",
     },
@@ -53,18 +53,18 @@ export default {
         [TargetAudience.STRANGER]: { label: 'Stranger' },
     },
     objectionStyleOptions: {
-        [ObjectionStyle.EVIDENCE_BASED]: { label: 'Evidence-Based' },
-        [ObjectionStyle.NVC]: { label: 'Nonviolent Communication' },
-        [ObjectionStyle.DESC]: { label: 'DESC Model' },
-        [ObjectionStyle.SBI]: { label: 'SBI Feedback' },
-        [ObjectionStyle.FALLACY_HINT]: { label: 'Hint at a Fallacy' },
+        [ObjectionStyle.EVIDENCE_BASED]: { label: 'Evidence-Based: Use Facts and Data' },
+        [ObjectionStyle.NVC]: { label: 'Nonviolent Communication: Share Feelings, State Needs' },
+        [ObjectionStyle.DESC]: { label: 'DESC Model: Describe, Explain, Suggest' },
+        [ObjectionStyle.SBI]: { label: 'SBI:Explain the Situation, Behavior&Impact' },
+        [ObjectionStyle.FALLACY_HINT]: { label: 'Hint at a Fallacy: Point Out Flawed Logic' },
     },
     emotionalStyleOptions: {
-        [EmotionalStyle.RATIONAL]: { label: 'Rational' },
-        [EmotionalStyle.SKEPTICAL]: { label: 'Skeptical' },
-        [EmotionalStyle.ASSERTIVE]: { label: 'Assertive' },
-        [EmotionalStyle.FRUSTRATED]: { label: 'Frustrated' },
-        [EmotionalStyle.SARCASTIC]: { label: 'Sarcastic' },
+        [EmotionalStyle.RATIONAL]: { label: 'Calm and Logical' },
+        [EmotionalStyle.SKEPTICAL]: { label: 'Questioning and Cautious' },
+        [EmotionalStyle.ASSERTIVE]: { label: 'Confident and Direct' },
+        [EmotionalStyle.FRUSTRATED]: { label: 'Expressing Impatience' },
+        [EmotionalStyle.SARCASTIC]: { label: 'Ironic and Witty' },
     },
     gemini: {
         mainPrompt: `
@@ -98,6 +98,6 @@ The final output MUST be a JSON array of one object adhering to the specified sc
             you: "You",
             them: "Them",
         },
-        error: "The AI failed to generate a valid response. This might be due to a content safety policy violation or an internal error. Please try adjusting your prompt.",
+        error: "The AI failed to generate a valid response. This may be due to an excessively long request duration or an internal error. Please try adjusting your strategy or reducing the amount of information entered.",
     }
 }

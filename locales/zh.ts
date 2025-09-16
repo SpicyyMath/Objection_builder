@@ -26,7 +26,7 @@ export default {
         frameworkTooltip: "应使用哪种沟通模型作为指导？",
         emotionLabel: "情感风格",
         emotionTooltip: "回应背后的核心情感是什么？",
-        intensityLabel: "语气强度:",
+        intensityLabel: "语气强度 (1=温和, 5=强硬):",
         generateButton: "生成异议",
         generatingButton: "生成中...",
     },
@@ -53,18 +53,18 @@ export default {
         [TargetAudience.STRANGER]: { label: '陌生人' },
     },
     objectionStyleOptions: {
-        [ObjectionStyle.EVIDENCE_BASED]: { label: '基于证据' },
-        [ObjectionStyle.NVC]: { label: '非暴力沟通' },
-        [ObjectionStyle.DESC]: { label: 'DESC 模型' },
-        [ObjectionStyle.SBI]: { label: 'SBI 反馈' },
-        [ObjectionStyle.FALLACY_HINT]: { label: '谬误暗示' },
+        [ObjectionStyle.EVIDENCE_BASED]: { label: '摆事实，讲道理' },
+        [ObjectionStyle.NVC]: { label: '非暴力沟通：先谈感受，再说需求' },
+        [ObjectionStyle.DESC]: { label: 'DESC 模型：描述问题，提议后果' },
+        [ObjectionStyle.SBI]: { label: 'SBI 反馈：还原情景，说明影响' },
+        [ObjectionStyle.FALLACY_HINT]: { label: '谬误暗示：指出逻辑漏洞' },
     },
     emotionalStyleOptions: {
-        [EmotionalStyle.RATIONAL]: { label: '理性的' },
-        [EmotionalStyle.SKEPTICAL]: { label: '怀疑的' },
-        [EmotionalStyle.ASSERTIVE]: { label: '自信的' },
-        [EmotionalStyle.FRUSTRATED]: { label: '沮丧的' },
-        [EmotionalStyle.SARCASTIC]: { label: '讽刺的' },
+        [EmotionalStyle.RATIONAL]: { label: '冷静客观' },
+        [EmotionalStyle.SKEPTICAL]: { label: '审慎怀疑' },
+        [EmotionalStyle.ASSERTIVE]: { label: '自信而直接' },
+        [EmotionalStyle.FRUSTRATED]: { label: '表达不耐烦' },
+        [EmotionalStyle.SARCASTIC]: { label: '讽刺且机智' },
     },
     gemini: {
         mainPrompt: `
@@ -98,6 +98,6 @@ export default {
             you: "你",
             them: "对方",
         },
-        error: "AI 未能生成有效回应。这可能是由于内容安全策略违规或内部错误。请尝试调整您的提示。",
+        error: "AI 未能生成有效回应。这可能是由于请求时间过长或内部错误。请尝试调整您的策略或减少输入的信息。",
     }
 }
