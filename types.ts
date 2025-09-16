@@ -8,6 +8,7 @@ export enum TargetAudience {
   CHILD = 'child',
   PARTNER = 'partner',
   STRANGER = 'stranger',
+  BITTER_ENEMY = 'bitter_enemy'//新增了仇人选项
 }
 
 export enum ObjectionStyle {

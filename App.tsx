@@ -15,9 +15,9 @@ import { useTranslations } from './hooks/useTranslations';
 const initialFormData: FormData = {
   mainArgument: '',
   context: '',
-  targetAudience: TargetAudience.COLLEAGUE,
-  objectionStyle: ObjectionStyle.EVIDENCE_BASED,
-  emotionalStyle: EmotionalStyle.RATIONAL,
+  targetAudience: TargetAudience.STRANGER,
+  objectionStyle: ObjectionStyle.FALLACY_HINT,
+  emotionalStyle: EmotionalStyle.SARCASTIC,
   toneIntensity: 3,
 };
 

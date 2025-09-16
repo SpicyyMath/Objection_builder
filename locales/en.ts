@@ -51,13 +51,15 @@ export default {
         [TargetAudience.CHILD]: { label: 'Child' },
         [TargetAudience.PARTNER]: { label: 'Partner' },
         [TargetAudience.STRANGER]: { label: 'Stranger' },
+        [TargetAudience.BITTER_ENEMY]: { label: 'Bitter_Enemy' },
     },
     objectionStyleOptions: {
+        [ObjectionStyle.FALLACY_HINT]: { label: 'Hint at a Fallacy: Point Out Flawed Logic' },
         [ObjectionStyle.EVIDENCE_BASED]: { label: 'Evidence-Based: Use Facts and Data' },
         [ObjectionStyle.NVC]: { label: 'Nonviolent Communication: Share Feelings, State Needs' },
         [ObjectionStyle.DESC]: { label: 'DESC Model: Describe, Explain, Suggest' },
         [ObjectionStyle.SBI]: { label: 'SBI:Explain the Situation, Behavior&Impact' },
-        [ObjectionStyle.FALLACY_HINT]: { label: 'Hint at a Fallacy: Point Out Flawed Logic' },
+
     },
     emotionalStyleOptions: {
         [EmotionalStyle.RATIONAL]: { label: 'Calm and Logical' },

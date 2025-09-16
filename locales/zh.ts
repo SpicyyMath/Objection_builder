@@ -51,13 +51,14 @@ export default {
         [TargetAudience.CHILD]: { label: '孩子' },
         [TargetAudience.PARTNER]: { label: '伴侣' },
         [TargetAudience.STRANGER]: { label: '陌生人' },
+        [TargetAudience.BITTER_ENEMY]: { label: '仇人' },
     },
     objectionStyleOptions: {
+        [ObjectionStyle.FALLACY_HINT]: { label: '谬误暗示：指出逻辑漏洞' },
         [ObjectionStyle.EVIDENCE_BASED]: { label: '摆事实，讲道理' },
         [ObjectionStyle.NVC]: { label: '非暴力沟通：先谈感受，再说需求' },
         [ObjectionStyle.DESC]: { label: 'DESC 模型：描述问题，提议后果' },
         [ObjectionStyle.SBI]: { label: 'SBI 反馈：还原情景，说明影响' },
-        [ObjectionStyle.FALLACY_HINT]: { label: '谬误暗示：指出逻辑漏洞' },
     },
     emotionalStyleOptions: {
         [EmotionalStyle.RATIONAL]: { label: '冷静客观' },
