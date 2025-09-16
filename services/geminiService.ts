@@ -21,7 +21,7 @@ export const generateObjection = async (formData: FormData, conversationHistory:
                 conversationHistory, 
                 language,
                 //translations: t // 将翻译文本也传过去
-                eminiPrompt: t.gemini // 只发送 gemini prompt 相关文本
+                geminiPrompt: t.gemini // 只发送 gemini prompt 相关文本
             }),
         });
 

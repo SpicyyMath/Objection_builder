@@ -48,6 +48,7 @@ export const handler: Handler = async (event) => {
     
     // 从前端接收翻译文本，这样我们就不需要在后端也维护一份
     const t = geminiPrompt;
+    
     const historyPrompt = conversationHistory.length > 0
     ? t.history.continue
         .replace('{history}', conversationHistory.map((turn: ConversationTurn) => `${turn.role === 'You' ? t.history.you : t.history.them}: ${turn.text}`).join('\n\n'))
