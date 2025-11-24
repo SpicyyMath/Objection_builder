@@ -16,6 +16,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "vite.config.ts", "index.tsx", "App.tsx", "types.ts", "constants.ts", "services", "components", "contexts", "hooks", "locales", "netlify"],
+  "include": ["src", "vite.config.ts", "index.tsx", "App.tsx", "types.ts", "constants.ts", "services", "components", "contexts", "hooks", "locales", "netlify", "vite-env.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
