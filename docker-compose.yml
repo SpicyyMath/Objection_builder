@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  # 后端服务
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: objection-backend
+    ports:
+      - "3001:3001"
+    environment:
+      - API_KEY=${API_KEY}
+      - PORT=3001
+    volumes:
+      - ./server:/app/server
+      - ./types.ts:/app/types.ts
+      - /app/node_modules
+    command: npm run dev:server
+    restart: unless-stopped
+
+  # 前端服务
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: objection-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_API_URL=http://localhost:3001
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run dev
+    depends_on:
+      - backend
+    restart: unless-stopped
