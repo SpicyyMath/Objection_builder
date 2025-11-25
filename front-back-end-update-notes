@@ -1,0 +1,130 @@
+恭喜你！🎉 这是一个巨大的里程碑。拥有第一个自己从头到尾配置上线、带有独立域名的 SaaS 产品，这种成就感是无与伦比的。
+
+作为资深开发者，我得告诉你：**“发布”只是开始，“迭代”才是日常。**
+
+针对你现在特殊的架构（**前端在 Amplify Hosting**，**后端在 Lambda + Docker**），你的“更新发布流（CI/CD Pipeline）”其实是分裂成两部分的。
+
+这不像之前的 Netlify 那么简单（全自动），你需要理解**前端和后端更新机制的区别**。
+
+---
+
+### 1. 前端更新：全自动 (Amplify 的魔法)
+
+你的前端（React/Vite）代码是直接连接 GitHub 的。
+
+*   **操作方式：**
+    1.  你在本地写代码，测试通过。
+    2.  `git add .` -> `git commit -m "update frontend"` -> `git push origin main`。
+*   **结果：**
+    *   AWS Amplify 会**实时监听**你的 GitHub `main` 分支。
+    *   一旦检测到 Push，它会自动触发构建（Provision -> Build -> Deploy）。
+    *   你只需要去 Amplify 控制台看一眼，等三个绿勾出现，你的前端公网页面就更新了。
+*   **如何确认：**
+    *   打开你的网站，强制刷新（Ctrl+F5 或 Cmd+Shift+R）。
+    *   或者在代码里改一下页脚的版本号（比如 `v1.0` 改成 `v1.1`），上线后看看变了没。
+
+---
+
+### 2. 后端更新：半自动 (需要你手动干预)
+
+**注意！这是新手最容易踩坑的地方。**
+
+你的后端是 **Docker 镜像**，跑在 **Lambda** 上。**AWS Amplify 并不管理你的后端 Docker 更新**。
+如果你只是 `git push` 了后端代码到 GitHub，AWS ECR 和 Lambda 是**感知不到**的。你的线上后端依然跑着旧版本的镜像。
+
+**如果你修改了 `server.js` 或后端逻辑，你需要做以下步骤（目前是手动的）：**
+
+#### 方案 A：手动更新流 (适合现阶段)
+每次你改了后端代码，你需要重复我们之前的“Docker 打包”步骤：
+
+1.  **本地构建并推送到仓库：**
+    ```bash
+    # 登录 (如果过期了)
+    aws ecr get-login-password ... | docker login ...
+    # 构建新镜像 (你可以用 v2, v3 标签，或者覆盖 latest)
+    docker build -t ... .
+    docker push ...
+    ```
+2.  **通知 Lambda 拉取新镜像：**
+    *   镜像推上去后，Lambda **不会**自动变。
+    *   你需要去 **Lambda 控制台** -> 你的函数 -> **Image** 标签页。
+    *   点击 **Deploy new image**。
+    *   选择你刚刚推上去的那个镜像（latest），点击保存。
+    *   *此时 Lambda 才会替换成新代码。*
+
+---
+
+### 3. 进阶方案：全自动化 (GitHub Actions) —— 资深开发者的做法
+
+以后你肯定会厌倦每次都要手动 `docker push` 和去控制台点按钮。我们可以用 **GitHub Actions** 来替你做这件事。
+
+**核心逻辑：** 当你 Push 代码到 GitHub 时，GitHub 的服务器自动帮你打包 Docker，推送到 AWS ECR，并命令 Lambda 更新。
+
+#### 想要实现吗？如果想，请按以下步骤操作（一次配置，永久自动）：
+
+**第一步：去 GitHub 仓库设置密钥**
+进入你的 GitHub 仓库 -> Settings -> Secrets and variables -> Actions -> New repository secret。添加三个变量：
+1.  `AWS_ACCESS_KEY_ID`: 你的 `admin-yi` 的 Key ID。
+2.  `AWS_SECRET_ACCESS_KEY`: 你的 `admin-yi` 的 Secret Key。
+3.  `AWS_REGION`: `ap-southeast-2` (你的区域)。
+
+**第二步：创建自动化脚本**
+在你的本地项目根目录下，创建文件夹 `.github/workflows`，并在里面建一个文件叫 `deploy-backend.yml`。
+
+**粘贴以下代码 (稍微修改一下你的 ECR 仓库地址和 Lambda 函数名)：**
+
+```yaml
+name: Deploy Backend to AWS Lambda
+
+on:
+  push:
+    branches:
+      - main # 只有推送到 main 分支才触发
+    paths:
+      - 'backend/**' # 假设你的后端代码在 backend 文件夹，如果是在根目录就去掉这行
+      - 'Dockerfile'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push image to Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: my-ai-backend # ⚠️改成你的 ECR 仓库名
+          IMAGE_TAG: latest
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+      - name: Update Lambda function
+        env:
+          LAMBDA_FUNCTION_NAME: ai-backend-api # ⚠️改成你的 Lambda 函数名
+        run: |
+          aws lambda update-function-code --function-name $LAMBDA_FUNCTION_NAME --image-uri ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:latest
+```
+
+---
+
+### 总结：如何确认同步更新？
+
+1.  **前端：** 只要 Push 代码，去 Amplify 控制台看 Build 状态变绿，或者直接刷新网页看效果。
+2.  **后端：**
+    *   **手动流：** 必须确保你执行了 `docker push` 并且在 Lambda 控制台点了 `Deploy new image`。
+    *   **自动流 (GitHub Actions)：** Push 后，去 GitHub 仓库的 **Actions** 标签页，看那个圆圈是不是变绿了。变绿就代表 AWS 后端已经更新完毕。
+
+**建议：** 既然是 MVP，先手动更几次后端找找感觉。等觉得烦了，再把上面的 GitHub Actions 加上去。享受你的开发之旅吧！
