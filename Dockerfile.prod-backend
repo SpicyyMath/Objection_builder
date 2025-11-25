@@ -1,0 +1,48 @@
+# 阶段 1: 构建
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# 复制 package.json 并安装所有依赖
+COPY package*.json ./
+RUN npm install
+
+# 复制源代码
+COPY server ./server
+COPY types.ts ./types.ts
+# 注意：我们不再需要复制 tsconfig.json，因为我们将使用显式编译命令
+
+# 编译 TypeScript
+# 解释：我们直接编译 server.ts，指定输出为 CommonJS 格式，避开 tsconfig.json 的 noEmit 问题
+RUN npx tsc server/server.ts --outDir dist --module commonjs --target ES2020 --esModuleInterop --skipLibCheck --moduleResolution node
+
+# 阶段 2: 生产
+FROM node:20-alpine
+
+# === ✨ 核心修改：注入 AWS Lambda Web Adapter ===
+COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.8.1 /lambda-adapter /opt/extensions/lambda-adapter
+# ==============================================
+
+WORKDIR /app
+
+# 复制 package.json
+COPY package*.json ./
+
+# 关键修复：移除 "type": "module"，因为我们编译成了 CommonJS 格式
+# 如果不这样做，Node.js 会报错 "ReferenceError: require is not defined"
+RUN sed -i '/"type": "module"/d' package.json
+
+# 只安装生产依赖
+RUN npm install --omit=dev
+
+# 从构建阶段复制编译好的 JS 文件
+COPY --from=builder /app/dist ./dist
+
+# 设置端口为 3000 (Lambda Adapter 默认转发到 8080，我们需要告诉它 Express 在哪)
+# 或者我们可以让 Express 监听环境变量 PORT
+ENV PORT=3000
+
+EXPOSE 3000
+
+# 启动服务器
+CMD ["node", "dist/server/server.js"]
