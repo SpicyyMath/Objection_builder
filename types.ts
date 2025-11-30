@@ -1,4 +1,3 @@
-
 export enum TargetAudience {
   ELDER = 'elder',
   TEACHER = 'teacher',
@@ -8,22 +7,18 @@ export enum TargetAudience {
   CHILD = 'child',
   PARTNER = 'partner',
   STRANGER = 'stranger',
-  BITTER_ENEMY = 'bitter_enemy'//新增了仇人选项
+  BITTER_ENEMY = 'bitter_enemy' //新增了仇人选项
 }
 
 export enum ObjectionStyle {
-  EVIDENCE_BASED = 'evidence_based',
   NVC = 'nvc',
   DESC = 'desc',
-  SBI = 'sbi',
   FALLACY_HINT = 'fallacy_hint',
 }
 
 export enum EmotionalStyle {
   RATIONAL = 'rational',
-  SKEPTICAL = 'skeptical',
   ASSERTIVE = 'assertive',
-  FRUSTRATED = 'frustrated',
   SARCASTIC = 'sarcastic',
 }
 

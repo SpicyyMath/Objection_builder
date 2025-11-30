@@ -12,14 +12,14 @@ export default {
         titleStart: "构建你的异议",
         titleReply: "撰写你的下一条回复",
         newConversation: "开始新对话",
-        statementLabelStart: "待处理的陈述",
-        statementLabelReply: "对方的最新回应",
-        statementPlaceholderStart: "例如：“我们应该周末加班来赶上最后期限。”",
+        statementLabelStart: "对方说了什么？(对方的原话)",
+        statementLabelReply: "对方最新回复了什么？",
+        statementPlaceholderStart: "例如：“你们是我带过的最差的一届”",
         statementPlaceholderReply: "例如：“那不在预算之内，而且我们没有时间。”",
-        errorStatement: "请输入待处理的陈述。",
+        errorStatement: "请输入对方的观点。",
         errorResponse: "请输入对方的回应。",
-        contextLabel: "补充背景（可选）",
-        contextPlaceholder: "例如：“这是一个关键的项目发布，但团队已经感到筋疲力尽。”",
+        contextLabel: "当时的情况/背景信息 (可选)",
+        contextPlaceholder: "例如：这是一个关键的项目发布，但团队已经感到筋疲力尽。我想反驳但不想撕破脸。",
         audienceLabel: "目标受众",
         audienceTooltip: "您在对谁说这句话？这会影响正式程度和语气。",
         frameworkLabel: "沟通框架",
@@ -36,6 +36,13 @@ export default {
         riskTitle: "人际风险",
         fallacyTitle: "原论点中潜在的逻辑谬误",
         evidenceTitle: "支撑证据",
+    },
+    loader: {
+        phase1: "🔍 正在分析逻辑谬误...",
+        phase2: "🧠 正在访问讽刺数据库...",
+        phase3: "✍️ 正在润色反击措辞...",
+        phase4: "✨ 正在预测精神伤害...",
+        ready: "准备就绪！",
     },
     spinner: {
         title: "正在生成回复...",
@@ -55,16 +62,12 @@ export default {
     },
     objectionStyleOptions: {
         [ObjectionStyle.FALLACY_HINT]: { label: '谬误暗示：指出逻辑漏洞' },
-        [ObjectionStyle.EVIDENCE_BASED]: { label: '摆事实，讲道理' },
         [ObjectionStyle.NVC]: { label: '非暴力沟通：先谈感受，再说需求' },
         [ObjectionStyle.DESC]: { label: 'DESC 模型：描述问题，提议后果' },
-        [ObjectionStyle.SBI]: { label: 'SBI 反馈：还原情景，说明影响' },
     },
     emotionalStyleOptions: {
         [EmotionalStyle.RATIONAL]: { label: '冷静客观' },
-        [EmotionalStyle.SKEPTICAL]: { label: '审慎怀疑' },
         [EmotionalStyle.ASSERTIVE]: { label: '自信而直接' },
-        [EmotionalStyle.FRUSTRATED]: { label: '表达不耐烦' },
         [EmotionalStyle.SARCASTIC]: { label: '讽刺且机智' },
     },
     gemini: {
@@ -100,5 +103,9 @@ export default {
             them: "对方",
         },
         error: "AI 未能生成有效回应。这可能是由于请求时间过长或内部错误。请尝试调整您的策略或减少输入的信息。",
+    },
+    footer: {
+        copyright: `© 2025 Objection Builder. 由 Ziyi Wang 构建。`,
+        disclaimer: "免责声明：对于因使用本工具而导致的友谊破裂、丢掉工作或自尊心受损，我们概不负责。请理性吵架。"
     }
 }
