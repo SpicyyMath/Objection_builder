@@ -4,7 +4,7 @@ import { generateObjection } from './services/geminiService';
 import Header from './components/Header';
 import ObjectionForm from './components/ObjectionForm';
 import ResultCard from './components/ResultCard';
-import Spinner from './components/Spinner';
+import NarrativeLoader from './components/NarrativeLoader';
 import ConversationHistory from './components/ConversationHistory';
 import { SparklesIcon } from './components/icons/SparklesIcon';
 import { ErrorIcon } from './components/icons/ErrorIcon';
@@ -99,13 +99,15 @@ const App: React.FC = () => {
         )}
 
         <div className="mt-12">
-          {isLoading && <Spinner />}
+          {isLoading && <NarrativeLoader isLoading={isLoading} />}
           
           {error && (
-            <div className="flex flex-col items-center text-center p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-500/30 rounded-lg">
-              <ErrorIcon className="w-12 h-12 text-red-500 mb-4" />
+            <div className="animate-fade-in-up flex flex-col items-center text-center p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-500/30 rounded-lg transition-all duration-300 ease-in-out transform">
+              <ErrorIcon className="w-12 h-12 text-red-500 mb-4 animate-bounce-short" />
               <h3 className="text-lg font-semibold text-red-700 dark:text-red-300">{t.generationFailed}</h3>
-              <p className="text-red-600 dark:text-red-400 mt-1">{error}</p>
+              <p className="text-red-600 dark:text-red-400 mt-2 max-w-lg mx-auto text-sm font-mono bg-white/50 dark:bg-black/20 p-2 rounded">
+                {error}
+              </p>
             </div>
           )}
 
@@ -123,7 +125,8 @@ const App: React.FC = () => {
         </div>
       </main>
       <footer className="text-center py-6 text-sm text-gray-500 dark:text-gray-400">
-        <p>&copy; {new Date().getFullYear()} Objection Builder. All Rights Reserved.</p>
+        <p className="mb-2">{t.footer.copyright}</p>
+        <p className="max-w-2xl mx-auto px-4">{t.footer.disclaimer}</p>
       </footer>
     </div>
   );

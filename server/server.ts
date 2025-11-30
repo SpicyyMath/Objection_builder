@@ -101,7 +101,7 @@ app.post('/api/generate', async (req: Request, res: Response) => {
             config: {
                 responseMimeType: 'application/json',
                 responseSchema: responseSchema,
-                temperature: 0.7, // 稍微降低温度，让模型更听话
+                temperature: 0.7, 
             },
         });
 
@@ -113,10 +113,61 @@ app.post('/api/generate', async (req: Request, res: Response) => {
         const parsedResults: ObjectionResult[] = JSON.parse(text.trim());
         res.json(parsedResults);
 
-    } catch (error) {
+    } catch (error: any) {
         console.error("🔥 Error in /api/generate:", error);
-        res.status(500).json({ 
-            error: error instanceof Error ? error.message : "The AI failed to generate a valid response." 
+
+        // 获取请求中的语言设置 (默认为英文)
+        const lang = req.body.language === 'zh' ? 'zh' : 'en';
+
+        // 默认状态码和通用错误信息 (兜底)
+        let statusCode = 500;
+        let errorMessage = lang === 'zh' 
+            ? "AI 服务暂时繁忙或遇到未知错误，请稍后重试。" 
+            : "The AI service is busy or encountered an error. Please try again later.";
+
+        if (error.message) {
+            // 1. API Key 配置错误
+            if (error.message.includes('API key')) {
+                statusCode = 401;
+                errorMessage = lang === 'zh'
+                    ? "服务器配置异常（API 密钥无效），请联系管理员。"
+                    : "Server configuration error (Invalid API Key). Please contact support.";
+            } 
+            // 2. 地区限制 (Region Blocked)
+            else if (error.message.includes('location') || error.message.includes('region')) {
+                statusCode = 403;
+                errorMessage = lang === 'zh'
+                    ? "抱歉，AI 服务当前在您所在的地区不可用。"
+                    : "Sorry, the AI service is not available in your current region.";
+            } 
+            // 3. 配额超限/流量过大 (429 Quota Exceeded)
+            else if (error.message.includes('429') || error.message.includes('Quota')) {
+                statusCode = 429;
+                errorMessage = lang === 'zh' 
+                    ? "当前使用人数过多，服务器繁忙，请稍后再试。" 
+                    : "High traffic volume. Please try again later.";
+            }
+            // 4. 内容安全拦截 (Safety Filters)
+            else if (error.message.includes('safety') || error.message.includes('blocked')) {
+                statusCode = 400;
+                errorMessage = lang === 'zh'
+                    ? "输入的内容可能包含敏感信息，被 AI 安全系统拦截，请调整措辞。"
+                    : "The input triggered AI safety filters. Please adjust your wording.";
+            }
+            // 5. AI 返回空内容
+            else if (error.message.includes('empty response')) {
+                statusCode = 500;
+                errorMessage = lang === 'zh'
+                    ? "AI 思考后没有返回有效结果，请尝试修改输入。"
+                    : "The AI returned an empty response. Please try modifying your input.";
+            } else {
+                errorMessage = error.message; // 开发环境暴露具体错误
+            }
+        }
+        // ==========================
+
+        res.status(statusCode).json({ 
+            error: errorMessage 
         });
     }
 });

@@ -12,14 +12,14 @@ export default {
         titleStart: "Build Your Objection",
         titleReply: "Craft Your Next Response",
         newConversation: "Start New Conversation",
-        statementLabelStart: "Statement to Address",
-        statementLabelReply: "Their Latest Response",
+        statementLabelStart: "What did they say? (Their exact words)",
+        statementLabelReply: "What was their latest reply?",
         statementPlaceholderStart: "e.g., 'We should work on weekends to meet the deadline.'",
         statementPlaceholderReply: "e.g., 'That's not in the budget and we don't have time.'",
         errorStatement: "Please provide the statement to address.",
         errorResponse: "Please provide their response.",
-        contextLabel: "Additional Context (Optional)",
-        contextPlaceholder: "e.g., 'This is for a critical project launch, but the team is already feeling burnt out.'",
+        contextLabel: "The Situation / Background Context (Optional)",
+        contextPlaceholder: "e.g., 'This is for a critical project launch, but the team is already feeling burnt out. I want to push back without burning bridges.'",
         audienceLabel: "Target Audience",
         audienceTooltip: "Who are you saying this to? This affects formality and tone.",
         frameworkLabel: "Communication Framework",
@@ -36,6 +36,13 @@ export default {
         riskTitle: "Interpersonal Risk",
         fallacyTitle: "Potential Logical Fallacy in Original Argument",
         evidenceTitle: "Supporting Evidence",
+    },
+    loader: {
+        phase1: "🔍 Analyzing logical fallacies...",
+        phase2: "🧠 Accessing sarcasm database...",
+        phase3: "✍️ Polishing the comeback...",
+        phase4: "✨ Predicting emotional damage...",
+        ready: "Ready!",
     },
     spinner: {
         title: "Generating Responses...",
@@ -55,17 +62,12 @@ export default {
     },
     objectionStyleOptions: {
         [ObjectionStyle.FALLACY_HINT]: { label: 'Hint at a Fallacy: Point Out Flawed Logic' },
-        [ObjectionStyle.EVIDENCE_BASED]: { label: 'Evidence-Based: Use Facts and Data' },
         [ObjectionStyle.NVC]: { label: 'Nonviolent Communication: Share Feelings, State Needs' },
         [ObjectionStyle.DESC]: { label: 'DESC Model: Describe, Explain, Suggest' },
-        [ObjectionStyle.SBI]: { label: 'SBI:Explain the Situation, Behavior&Impact' },
-
     },
     emotionalStyleOptions: {
         [EmotionalStyle.RATIONAL]: { label: 'Calm and Logical' },
-        [EmotionalStyle.SKEPTICAL]: { label: 'Questioning and Cautious' },
         [EmotionalStyle.ASSERTIVE]: { label: 'Confident and Direct' },
-        [EmotionalStyle.FRUSTRATED]: { label: 'Expressing Impatience' },
         [EmotionalStyle.SARCASTIC]: { label: 'Ironic and Witty' },
     },
     gemini: {
@@ -101,5 +103,9 @@ The final output MUST be a JSON array of one object adhering to the specified sc
             them: "Them",
         },
         error: "The AI failed to generate a valid response. This may be due to an excessively long request duration or an internal error. Please try adjusting your strategy or reducing the amount of information entered.",
+    },
+    footer: {
+        copyright: `© 2025 Objection Builder. Built by Ziyi Wang.`,
+        disclaimer: "Disclaimer: We are not responsible for broken friendships, fired jobs, or bruises on your ego resulting from using this tool. Argue responsibly."
     }
 }

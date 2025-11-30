@@ -11,7 +11,6 @@ export const generateObjection = async (formData: FormData, conversationHistory:
     const t = translations[language];
 
     try {
-        // 调用新的 Express 后端，而不是 Netlify Function
         const response = await fetch(`${API_BASE_URL}/api/generate`, {
             method: 'POST',
             headers: {
@@ -20,14 +19,16 @@ export const generateObjection = async (formData: FormData, conversationHistory:
             body: JSON.stringify({ 
                 formData, 
                 conversationHistory, 
-                language,
+                language, 
                 geminiPrompt: t.gemini
             }),
         });
 
         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || 'Failed to fetch from the server.');
+            // 尝试解析后端返回的 JSON 错误信息
+            const errorData = await response.json().catch(() => ({}));
+            // 优先使用后端返回的 error 字段
+            throw new Error(errorData.error || `Server Error: ${response.status} ${response.statusText}`);
         }
 
         const parsedResults: ObjectionResult[] = await response.json();
@@ -35,6 +36,6 @@ export const generateObjection = async (formData: FormData, conversationHistory:
 
     } catch (error) {
         console.error("Error calling backend API:", error);
-        throw new Error(t.gemini.error);
+        throw error;
     }
 };
