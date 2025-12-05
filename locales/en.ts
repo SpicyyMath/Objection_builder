@@ -38,7 +38,7 @@ export default {
     },
     loader: {
         phase1: "🔍 Analyzing logical fallacies...",
-        phase2: "🧠 Accessing sarcasm database...",
+        phase2: "🧠 Accessing thinking database...",
         phase3: "✍️ Polishing the comeback...",
         phase4: "✨ Predicting emotional damage...",
         ready: "Ready!",
