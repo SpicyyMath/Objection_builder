@@ -4,7 +4,6 @@ import { CopyIcon } from './icons/CopyIcon';
 import { CheckIcon } from './icons/CheckIcon';
 import { WarningIcon } from './icons/WarningIcon';
 import { LightbulbIcon } from './icons/LightbulbIcon';
-import { QuoteIcon } from './icons/QuoteIcon';
 import { ReplyIcon } from './icons/ReplyIcon';
 import { useTranslations } from '../hooks/useTranslations';
 
@@ -90,31 +89,6 @@ const ResultCard: React.FC<ResultCardProps> = ({ result, onReply }) => {
                 ))}
               </div>
             </div>
-          </div>
-        )}
-
-        {/* Citations */}
-        {result.citations.length > 0 && (
-          <div className="p-4 rounded-lg border bg-gray-100 dark:bg-gray-700/50 border-gray-200 dark:border-gray-600/50">
-             <div className="flex items-start gap-3">
-                <QuoteIcon className="w-5 h-5 mt-0.5 shrink-0 text-gray-600 dark:text-gray-300" />
-                <div>
-                   <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200">
-                    {t.results.evidenceTitle}
-                   </h4>
-                   <div className="mt-2 space-y-3">
-                     {result.citations.map((citation, index) => (
-                        <div key={index} className="text-sm">
-                          <a href={citation.url} target="_blank" rel="noopener noreferrer" className="font-medium text-primary-600 dark:text-primary-400 hover:underline">
-                            {citation.title}
-                          </a>
-                          <p className="text-gray-600 dark:text-gray-400 text-xs">{citation.source}</p>
-                          <p className="mt-1 text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 p-2 rounded-md border-l-2 border-primary-500 italic">"{citation.snippet}"</p>
-                        </div>
-                    ))}
-                   </div>
-                </div>
-             </div>
           </div>
         )}
       </div>

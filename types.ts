@@ -31,13 +31,6 @@ export interface FormData {
   toneIntensity: number;
 }
 
-export interface Citation {
-  title: string;
-  source: string;
-  url: string;
-  snippet: string;
-}
-
 export interface Fallacy {
   name: string;
   explanation: string;
@@ -51,7 +44,6 @@ export interface ObjectionResult {
   riskLevel: RiskLevel;
   riskReasoning: string;
   fallacies: Fallacy[];
-  citations: Citation[];
 }
 
 export interface ConversationTurn {
