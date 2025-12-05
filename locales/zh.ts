@@ -35,7 +35,6 @@ export default {
         reply: "回复此条",
         riskTitle: "人际风险",
         fallacyTitle: "原论点中潜在的逻辑谬误",
-        evidenceTitle: "支撑证据",
     },
     loader: {
         phase1: "🔍 正在分析逻辑谬误...",
@@ -89,10 +88,9 @@ export default {
 
 对于生成的回应中，你都必须以有效的 JSON 格式提供以下内容：
 1.  **responseText**: 完整、可直接使用的反驳论点文本。
-2.  **riskLevel**: 评估使用此回应的人际风险（'Low', 'Medium', 'High'）。
+2.  **riskLevel**: 评估使用此回应的人际风险（'低', '中', '高'）。
 3.  **riskReasoning**: 简要解释分配该风险等级的原因。
 4.  **fallacies**: 一个数组，包含在*原始*陈述中识别出的潜在逻辑谬误。如果未发现，则返回空数组。
-5.  **citations**: 一个数组，包含可验证的引文以支持回应中提出的主张。如果不需要，则返回空数组。
 
 最终输出必须是一个包含1个对象的 JSON 数组，并遵循指定的模式。不要在 JSON 结构之外包含任何解释性文字。
         `,
@@ -105,7 +103,7 @@ export default {
         error: "AI 未能生成有效回应。这可能是由于请求时间过长或内部错误。请尝试调整您的策略或减少输入的信息。",
     },
     footer: {
-        copyright: `© 2025 Objection Builder. 由 Ziyi Wang 构建。`,
+        copyright: `© 2025 Objection Builder. 由 SpicyyMath 构建。`,
         disclaimer: "免责声明：对于因使用本工具而导致的友谊破裂、丢掉工作或自尊心受损，我们概不负责。请理性吵架。"
     }
 }

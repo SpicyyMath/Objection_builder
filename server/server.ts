@@ -30,16 +30,8 @@ const responseSchema = {
                     required: ['name', 'explanation', 'suggestion'],
                 },
             },
-            citations: {
-                type: Type.ARRAY,
-                items: {
-                    type: Type.OBJECT,
-                    properties: { title: { type: Type.STRING }, source: { type: Type.STRING }, url: { type: Type.STRING }, snippet: { type: Type.STRING } },
-                    required: ['title', 'source', 'url', 'snippet'],
-                },
-            },
         },
-        required: ['responseText', 'riskLevel', 'riskReasoning', 'fallacies', 'citations'],
+        required: ['responseText', 'riskLevel', 'riskReasoning', 'fallacies'],
     },
 };
 

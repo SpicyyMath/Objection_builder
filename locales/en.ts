@@ -35,7 +35,6 @@ export default {
         reply: "Reply to this",
         riskTitle: "Interpersonal Risk",
         fallacyTitle: "Potential Logical Fallacy in Original Argument",
-        evidenceTitle: "Supporting Evidence",
     },
     loader: {
         phase1: "🔍 Analyzing logical fallacies...",
@@ -92,7 +91,6 @@ For generated response, you MUST provide the following in valid JSON format:
 2.  **riskLevel**: Assess the interpersonal risk ('Low', 'Medium', 'High') of using this response.
 3.  **riskReasoning**: Briefly explain the reasoning behind the assigned risk level.
 4.  **fallacies**: An array of potential logical fallacies in the *original* statement. If none, return an empty array.
-5.  **citations**: An array of verifiable citations if the response is evidence-based. If none, return an empty array.
 
 The final output MUST be a JSON array of one object adhering to the specified schema. Do not include any explanatory text outside of the JSON structure.
         `,
@@ -105,7 +103,7 @@ The final output MUST be a JSON array of one object adhering to the specified sc
         error: "The AI failed to generate a valid response. This may be due to an excessively long request duration or an internal error. Please try adjusting your strategy or reducing the amount of information entered.",
     },
     footer: {
-        copyright: `© 2025 Objection Builder. Built by Ziyi Wang.`,
+        copyright: `© 2025 Objection Builder. Built by SpicyyMath.`,
         disclaimer: "Disclaimer: We are not responsible for broken friendships, fired jobs, or bruises on your ego resulting from using this tool. Argue responsibly."
     }
 }
